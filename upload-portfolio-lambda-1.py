@@ -16,4 +16,11 @@ def lambda_handler(event, context):
             obj = myzip.open(nm)
             portfolio_bucket.upload_fileobj(obj, nm, ExtraArgs={'ContentType': mimetypes.guess_type(nm)[0]})
             portfolio_bucket.Object(nm).Acl().put(ACL='public-read')
-    return 'Hello from Lambda'
+
+    sns = boto3.resource('sns')
+    topic = sns.Topic('arn:aws:sns:us-east-1:390072403864:portfolio-topic')
+    response = topic.publish(
+    Message='Your Portfolio has been successfully updated',
+    Subject='Portfolio update',
+    )
+    return 'Portfolio updated: pushed to prod S3'
