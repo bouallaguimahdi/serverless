@@ -1,3 +1,6 @@
+# this is an example of lambda function
+# to upload code
+# just a test  
 import json
 import boto3
 import zipfile
