@@ -1,6 +1,6 @@
 # this is an example of lambda function
 # to upload code
-# just a test  
+# just a test
 import json
 import boto3
 import zipfile
@@ -35,7 +35,7 @@ def lambda_handler(event, context):
         return 'Portfolio updated: pushed to prod S3'
         topic.publish(Message='Your Portfolio has been successfully updated', Subject='Portfolio update')
         if job:
-            codepipeline = boto3.resource('codepipeline')
+            codepipeline = boto3.client('codepipeline')
             codepipeline.put_job_success_result(jobId=job["id"])
     except:
         topic.publish(Message='Failed to deploy your portfolio', Subject='Portfolio update')
